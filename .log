@@ -228,3 +228,26 @@
 {"level":"info","message":"Application Environment : development","timestamp":"2024-08-13T18:27:19.533Z"}
 {"level":"info","message":"Application Environment : development","timestamp":"2024-08-13T18:28:00.883Z"}
 {"level":"info","message":"Application Environment : development","timestamp":"2024-08-13T18:28:43.444Z"}
+{"level":"info","message":"Application Environment : development","timestamp":"2024-08-13T18:44:01.652Z"}
+{"body":{},"ip":"::1","level":"info","message":"HTTP Request","method":"GET","path":"/temp","query":{},"responseTime":8,"status":"success","timestamp":"2024-08-13T18:44:05.899Z","userAgent":"PostmanRuntime/7.41.1"}
+{"level":"info","message":"Application Environment : development","timestamp":"2024-08-13T18:58:15.685Z"}
+{"level":"info","message":"Application Environment : development","timestamp":"2024-08-13T18:58:24.202Z"}
+{"body":{},"ip":"::1","level":"info","message":"HTTP Request","method":"GET","path":"/v1/employee/fetchEmployee","query":{},"responseTime":12,"status":"failed","timestamp":"2024-08-13T18:58:46.512Z","userAgent":"PostmanRuntime/7.41.1"}
+{"body":{},"ip":"::1","level":"info","message":"HTTP Request","method":"GET","path":"/v1/employee/fetchEmployee","query":{},"responseTime":7,"status":"failed","timestamp":"2024-08-13T18:59:42.260Z","userAgent":"PostmanRuntime/7.41.1"}
+{"level":"info","message":"Application Environment : development","timestamp":"2024-08-13T19:01:21.584Z"}
+{"body":{},"ip":"::1","level":"info","message":"HTTP Request","method":"GET","path":"/fetchEmployee","query":{},"responseTime":44,"status":"success","timestamp":"2024-08-13T19:01:23.863Z","userAgent":"PostmanRuntime/7.41.1"}
+{"level":"info","message":"Application Environment : development","timestamp":"2024-08-13T19:02:25.901Z"}
+{"body":{},"ip":"::1","level":"info","message":"HTTP Request","method":"GET","path":"/fetchEmployee","query":{},"responseTime":37,"status":"success","timestamp":"2024-08-13T19:02:27.449Z","userAgent":"PostmanRuntime/7.41.1"}
+{"body":{"departmentId":2},"ip":"::1","level":"info","message":"HTTP Request","method":"GET","path":"/fetchEmployee","query":{},"responseTime":17,"status":"success","timestamp":"2024-08-13T19:04:10.535Z","userAgent":"PostmanRuntime/7.41.1"}
+{"level":"info","message":"Application Environment : development","timestamp":"2024-08-13T19:04:26.319Z"}
+{"body":{"departmentId":2},"ip":"::1","level":"info","message":"HTTP Request","method":"GET","path":"/fetchEmployee","query":{},"responseTime":45,"status":"failed","timestamp":"2024-08-13T19:04:29.140Z","userAgent":"PostmanRuntime/7.41.1"}
+{"level":"info","message":"Application Environment : development","timestamp":"2024-08-13T19:04:51.607Z"}
+{"body":{"departmentId":2},"ip":"::1","level":"info","message":"HTTP Request","method":"GET","path":"/fetchEmployee","query":{},"responseTime":55,"status":"success","timestamp":"2024-08-13T19:04:54.394Z","userAgent":"PostmanRuntime/7.41.1"}
+{"level":"info","message":"Application Environment : development","timestamp":"2024-08-13T19:05:52.012Z"}
+{"body":{"departmentId":2},"ip":"::1","level":"info","message":"HTTP Request","method":"GET","path":"/fetchEmployee","query":{},"responseTime":44,"status":"failed","timestamp":"2024-08-13T19:05:53.868Z","userAgent":"PostmanRuntime/7.41.1"}
+{"body":{"project_id":2},"ip":"::1","level":"info","message":"HTTP Request","method":"GET","path":"/fetchEmployee","query":{},"responseTime":6,"status":"failed","timestamp":"2024-08-13T19:06:01.183Z","userAgent":"PostmanRuntime/7.41.1"}
+{"level":"info","message":"Application Environment : development","timestamp":"2024-08-13T19:06:40.538Z"}
+{"level":"info","message":"Application Environment : development","timestamp":"2024-08-13T19:06:46.522Z"}
+{"body":{"projectId":2},"ip":"::1","level":"info","message":"HTTP Request","method":"GET","path":"/fetchEmployee","query":{},"responseTime":43,"status":"failed","timestamp":"2024-08-13T19:06:49.883Z","userAgent":"PostmanRuntime/7.41.1"}
+{"level":"info","message":"Application Environment : development","timestamp":"2024-08-13T19:07:13.583Z"}
+{"body":{"projectId":2},"ip":"::1","level":"info","message":"HTTP Request","method":"GET","path":"/fetchEmployee","query":{},"responseTime":44,"status":"success","timestamp":"2024-08-13T19:07:17.114Z","userAgent":"PostmanRuntime/7.41.1"}

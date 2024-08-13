@@ -76,6 +76,24 @@ export async function deleteEmployee(req,res){
     }
 }
 
+export async function fetchEmployee(req,res){
+    try{
+        const empData = req.body;
+        const result = await Employee.fetch(empData);
+        console.log(result)
+        if(result.status == 200){
+            return res.status(200).send(result.data)
+        }
+        else{
+            return res.status(400).send(result.msg)
+        }
+    }
+    catch(err){
+        console.log(err)
+        return res.status(500).send({"msg":"Internal server error2"})
+    }
+}
+
 export function temp(req,res){
-    res.send("hello emp");
+    res.status(200).send("hello emp");
 }

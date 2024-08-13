@@ -114,7 +114,21 @@ class Employee {
       return { status: 500, msg: "Internal server error" };
     }
   }
+
+  static async fetch(empData) {
+    try {
+      const {projectId} = empData;
+      const pool = await poolPromise;
+      const result = await pool.query(`select d.department_id,d.department_name,sum(budget) from projects p join departments d on p.department_id = d.department_id where p.project_id = ? group by d.department_id`,[projectId])
+      return { status: 200, data: result[0] };
+    } catch (err) {
+      console.log(err);
+      return { status: 500, msg: "Internal server error" };
+    }
+  }
+
 }
+
 
 // duplicate entry - 409
 export default Employee;
