@@ -14,7 +14,7 @@ export async function addEmployee(req,res){
             return res.status(200).send(result.msg)
         }
         else{
-            return res.status(400).send(result.msg)
+            return res.status(result.status).send(result.msg)
         }
     }
     catch(err){
@@ -31,7 +31,7 @@ export async function updateEmployee(req,res){
             return res.status(200).send(result.msg)
         }
         else{
-            return res.status(400).send(result.msg)
+            return res.status(result.status).send(result.msg)
         }
     }
     catch(err){
@@ -49,7 +49,7 @@ export async function assignEmployee(req,res){
             return res.status(200).send(result.msg)
         }
         else{
-            return res.status(400).send(result.msg)
+            return res.status(result.status).send(result.msg)
         }
     }
     catch(err){
@@ -67,7 +67,7 @@ export async function deleteEmployee(req,res){
             return res.status(200).send(result.msg)
         }
         else{
-            return res.status(400).send(result.msg)
+            return res.status(result.status).send(result.msg)
         }
     }
     catch(err){
@@ -85,7 +85,7 @@ export async function fetchEmployee(req,res){
             return res.status(200).send(result.data)
         }
         else{
-            return res.status(400).send(result.msg)
+            return res.status(result.status).send(result.msg)
         }
     }
     catch(err){

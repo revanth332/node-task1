@@ -98,23 +98,25 @@ class Employee {
         `delete from ${tableName} where employee_id = ?`,
         [employeeId]
       );
-      const emps = await pool.query(
-        `select * from ${tableName} where manager_id = ?`,
-        [employeeId]
-      );
-      if (emps[0].length > 0) {
-        const managers = await pool.query(
-          `select employee_id from ${tableName} where manager_id is null`
+      if(empProject[0].affectedRows !== 0){
+        const emps = await pool.query(
+          `select * from ${tableName} where manager_id = ?`,
+          [employeeId]
         );
-        const mid = managers[0][0]["employee_id"];
-        // console.log(mid)
-        await pool.query(
-          `update ${tableName} set manager_id = ${mid} where manager_id = ${employeeId}`
-        );
+        if (emps[0].length > 0) {
+          const [managers] = await pool.query(
+            `select employee_id from ${tableName} where manager_id is null`
+          );
+          const mid = managers[0].employee_id;
+         
+          await pool.query(
+            `update ${tableName} set manager_id = ? where manager_id = ?`,[mid,employeeId]
+          );
+        }
+        return { status: 200, msg: "employee deleted successfully" };
       }
-      // const sql = `insert into employee_projects values(?,?,?,?,?)`;
-      // const result = await pool.query(sql,[employeeId,projectId,role,hoursWorked,departmentId]);
-      return { status: 200, msg: "employee deletedsuccessfully" };
+      else return {status:404,msg:"Employee not found"}
+
     } catch (err) {
       console.log(err);
       return { status: 500, msg: "Internal server error" };
@@ -123,21 +125,26 @@ class Employee {
 
   static async fetch(empData) {
     try {
-      const { projectId, endDate, departmentId } = empData;
+      const { departmentId, endDate, startDate } = empData;
       const pool = await poolPromise;
-      let sql = `select d.department_id,d.department_name,sum(budget) from projects p join departments d on p.department_id = d.department_id where 1=1 `;
+      let sql = `select d.department_id,d.department_name,sum(budget) as allocatedBudget,sum(ep.hours_worked*(e.salary/(365*24))) as budgetSpent from projects p join departments d join employee_projects ep join employee e on p.department_id = d.department_id and p.project_id=ep.project_id and ep.employee_id = e.employee_id where 1=1 `;
       let params = [];
-      if (projectId !== undefined) {
-        sql += `and p.project_id = ? `;
-        params.push(projectId);
+      if (departmentId !== undefined) {
+        sql += `and p.department_id = ? `;
+        params.push(departmentId);
       }
       if (endDate !== undefined) {
         sql += `and p.end_date = ? `;
         params.push(endDate);
       }
-      console.log(sql, projectId, endDate);
+      if (startDate !== undefined) {
+        sql += `and p.start_date = ? `;
+        params.push(startDate);
+      }
+      sql+=`group by department_id`;
       const result = await pool.query(sql, params);
-      return { status: 200, data: result[0] };
+      if(result[0].length !== 0) return { status: 200, data: result[0] };
+      else return { status: 404, msg:"No data found" };
     } catch (err) {
       console.log(err);
       return { status: 500, msg: "Internal server error" };
