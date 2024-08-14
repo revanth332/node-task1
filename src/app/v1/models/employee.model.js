@@ -2,20 +2,20 @@ import { poolPromise } from "../utils/dbConnection.js";
 const tableName = "employee";
 class Employee {
   static async create(empData) {
-      const pool = await poolPromise;
-      const {
-        firstName,
-        lastName,
-        email,
-        phoneNumber,
-        hireDate,
-        salary,
-        managerId,
-        departmentId,
-      } = empData;
-      if (new Date(hireDate) > new Date())
-        return { status: 400, msg: "Invalid date" };
-      try{
+    const pool = await poolPromise;
+    const {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      hireDate,
+      salary,
+      managerId,
+      departmentId,
+    } = empData;
+    if (new Date(hireDate) > new Date())
+      return { status: 400, msg: "Invalid date" };
+    try {
       const sql = `insert into ${tableName}(employee_id,first_name,last_name,email,phone_number,hire_date,salary,manager_id,department_id) values(UUID(),?,?,?,?,?,?,?,?)`;
       const result = await pool.query(sql, [
         firstName,
@@ -27,11 +27,10 @@ class Employee {
         managerId,
         departmentId,
       ]);
+    } catch (err) {
+      return { status: 409, msg: "Duplicate entry found" };
     }
-    catch(err){
-        return {status:409,msg:"Duplicate entry found"}
-    }
-      return { status: 200, msg: "Successfully added employee" };
+    return { status: 200, msg: "Successfully added employee" };
   }
 
   static async update(empData) {
@@ -95,16 +94,23 @@ class Employee {
     try {
       const pool = await poolPromise;
       const { employeeId } = empData;
-      const empProject = await pool.query(`delete from ${tableName} where employee_id = ?`,[employeeId]);
+      const empProject = await pool.query(
+        `delete from ${tableName} where employee_id = ?`,
+        [employeeId]
+      );
       const emps = await pool.query(
         `select * from ${tableName} where manager_id = ?`,
         [employeeId]
       );
       if (emps[0].length > 0) {
-        const managers = await pool.query(`select employee_id from ${tableName} where manager_id is null`)
-        const mid = managers[0][0]["employee_id"]
+        const managers = await pool.query(
+          `select employee_id from ${tableName} where manager_id is null`
+        );
+        const mid = managers[0][0]["employee_id"];
         // console.log(mid)
-        await pool.query(`update ${tableName} set manager_id = ${mid} where manager_id = ${employeeId}`);
+        await pool.query(
+          `update ${tableName} set manager_id = ${mid} where manager_id = ${employeeId}`
+        );
       }
       // const sql = `insert into employee_projects values(?,?,?,?,?)`;
       // const result = await pool.query(sql,[employeeId,projectId,role,hoursWorked,departmentId]);
@@ -117,18 +123,27 @@ class Employee {
 
   static async fetch(empData) {
     try {
-      const {projectId} = empData;
+      const { projectId, endDate, departmentId } = empData;
       const pool = await poolPromise;
-      const result = await pool.query(`select d.department_id,d.department_name,sum(budget) from projects p join departments d on p.department_id = d.department_id where p.project_id = ? group by d.department_id`,[projectId])
+      let sql = `select d.department_id,d.department_name,sum(budget) from projects p join departments d on p.department_id = d.department_id where 1=1 `;
+      let params = [];
+      if (projectId !== undefined) {
+        sql += `and p.project_id = ? `;
+        params.push(projectId);
+      }
+      if (endDate !== undefined) {
+        sql += `and p.end_date = ? `;
+        params.push(endDate);
+      }
+      console.log(sql, projectId, endDate);
+      const result = await pool.query(sql, params);
       return { status: 200, data: result[0] };
     } catch (err) {
       console.log(err);
       return { status: 500, msg: "Internal server error" };
     }
   }
-
 }
-
 
 // duplicate entry - 409
 export default Employee;
